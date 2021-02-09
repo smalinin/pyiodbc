@@ -2093,7 +2093,7 @@ struct NullParam
 PyTypeObject NullParamType =
 {
     PyVarObject_HEAD_INIT(NULL, 0)
-    "pyodbc.NullParam",         // tp_name
+    "pyiodbc.NullParam",         // tp_name
     sizeof(NullParam),          // tp_basicsize
     0,                          // tp_itemsize
     0,                          // destructor tp_dealloc

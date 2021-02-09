@@ -131,7 +131,7 @@ static PyObject* Row_new(PyTypeObject* type, PyObject* args, PyObject* kwargs)
 
     PyObject* row = new_check(args);
     if (row == 0)
-        PyErr_SetString(PyExc_TypeError, "cannot create 'pyodbc.Row' instances");
+        PyErr_SetString(PyExc_TypeError, "cannot create 'pyiodbc.Row' instances");
     return row;
 
 }
@@ -494,7 +494,7 @@ static char row_doc[] =
 PyTypeObject RowType =
 {
     PyVarObject_HEAD_INIT(NULL, 0)
-    "pyodbc.Row",                                           // tp_name
+    "pyiodbc.Row",                                           // tp_name
     sizeof(Row),                                            // tp_basicsize
     0,                                                      // tp_itemsize
     Row_dealloc,                                            // tp_dealloc

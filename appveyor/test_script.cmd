@@ -4,7 +4,7 @@ SET OVERALL_RESULT=0
 
 REM Output a list of the ODBC drivers available to pyodbc
 ECHO *** Available ODBC Drivers:
-"%PYTHON_HOME%\python" -c "import pyodbc; print('\n'.join(sorted(pyodbc.drivers())))"
+"%PYTHON_HOME%\python" -c "import pyiodbc; print('\n'.join(sorted(pyiodbc.drivers())))"
 
 
 REM check if any testing should be done at all

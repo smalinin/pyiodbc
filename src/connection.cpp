@@ -1197,7 +1197,7 @@ static char conv_add_doc[] =
     "\n"
     "sqltype\n"
     "  The integer SQL type value to convert, which can be one of the defined\n"
-    "  standard constants (e.g. pyodbc.SQL_VARCHAR) or a database-specific value\n"
+    "  standard constants (e.g. pyiodbc.SQL_VARCHAR) or a database-specific value\n"
     "  (e.g. -151 for the SQL Server 2008 geometry data type).\n"
     "\n"
     "func\n"
@@ -1243,7 +1243,7 @@ static char conv_remove_doc[] =
     "\n"
     "sqltype\n"
     "  The integer SQL type value being converted, which can be one of the defined\n"
-    "  standard constants (e.g. pyodbc.SQL_VARCHAR) or a database-specific value\n"
+    "  standard constants (e.g. pyiodbc.SQL_VARCHAR) or a database-specific value\n"
     "  (e.g. -151 for the SQL Server 2008 geometry data type).\n"
     ;
 
@@ -1268,7 +1268,7 @@ static char conv_get_doc[] =
     "\n"
     "sqltype\n"
     "  The integer SQL type value being converted, which can be one of the defined\n"
-    "  standard constants (e.g. pyodbc.SQL_VARCHAR) or a database-specific value\n"
+    "  standard constants (e.g. pyiodbc.SQL_VARCHAR) or a database-specific value\n"
     "  (e.g. -151 for the SQL Server 2008 geometry data type).\n"
     ;
 
@@ -1494,7 +1494,7 @@ static char setdecoding_doc[] =
     "\n"
     "When reading, the database will assign one of the sqltypes to text columns.\n"
     "pyodbc uses this lookup the decoding information set by this function.\n"
-    "sqltype: pyodbc.SQL_CHAR or pyodbc.SQL_WCHAR\n\n"
+    "sqltype: pyodbc.SQL_CHAR or pyiodbc.SQL_WCHAR\n\n"
     "encoding: A registered Python encoding such as \"utf-8\".\n\n"
 #if PY_MAJOR_VERSION < 3
     "to: the desired Python object type - str or unicode"
@@ -1629,7 +1629,7 @@ static PyGetSetDef Connection_getseters[] = {
 PyTypeObject ConnectionType =
 {
     PyVarObject_HEAD_INIT(0, 0)
-    "pyodbc.Connection",        // tp_name
+    "pyiodbc.Connection",        // tp_name
     sizeof(Connection),         // tp_basicsize
     0,                          // tp_itemsize
     Connection_dealloc,         // destructor tp_dealloc

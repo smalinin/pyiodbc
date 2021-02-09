@@ -88,7 +88,7 @@ struct ExcInfo
     const char* szDoc;
 };
 
-#define MAKEEXCINFO(name, parent, doc) { #name, "pyodbc." #name, &name, &parent, doc }
+#define MAKEEXCINFO(name, parent, doc) { #name, "pyiodbc." #name, &name, &parent, doc }
 
 static ExcInfo aExcInfos[] = {
     MAKEEXCINFO(Error, PyExc_Exception,
@@ -170,7 +170,7 @@ PyObject* GetClassForThread(const char* szModule, const char* szClass)
     {
         // I don't know why there wouldn't be thread state so I'm going to raise an exception
         // unless I find more info.
-        return PyErr_Format(PyExc_Exception, "pyodbc: PyThreadState_GetDict returned NULL");
+        return PyErr_Format(PyExc_Exception, "pyiodbc: PyThreadState_GetDict returned NULL");
     }
 
     // Check the cache.  GetItemString returns a borrowed reference.
@@ -322,7 +322,7 @@ static bool AllocateEnv()
 
     if (!SQL_SUCCEEDED(SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &henv)))
     {
-        PyErr_SetString(PyExc_RuntimeError, "Can't initialize module pyodbc.  SQLAllocEnv failed.");
+        PyErr_SetString(PyExc_RuntimeError, "Can't initialize module pyiodbc.  SQLAllocEnv failed.");
         return false;
     }
 
@@ -332,6 +332,12 @@ static bool AllocateEnv()
         return false;
     }
 
+    /*** switch iODBC DM to UTF16 mode ***/
+    if (!SQL_SUCCEEDED(SQLSetEnvAttr(henv, SQL_ATTR_APP_UNICODE_TYPE, (SQLPOINTER) SQL_DM_CP_UTF16, SQL_IS_UINTEGER)))
+    {
+        PyErr_SetString(PyExc_RuntimeError, "Can't initialize module pyiodbc.  SQLSetEnvAttr(..,SQL_DM_CP_UTF16,..).");
+        return false;
+    }
     return true;
 }
 
@@ -711,7 +717,7 @@ static char connect_doc[] =
     "The connection string will be passed to SQLDriverConnect, so a DSN connection\n"
     "can be created using:\n"
     "\n"
-    "  cnxn = pyodbc.connect('DSN=DataSourceName;UID=user;PWD=password')\n"
+    "  cnxn = pyiodbc.connect('DSN=DataSourceName;UID=user;PWD=password')\n"
     "\n"
     "To connect without requiring a DSN, specify the driver and connection\n"
     "information:\n"
@@ -735,7 +741,7 @@ static char connect_doc[] =
     "\n"
     "Special Keywords\n"
     "\n"
-    "The following specal keywords are processed by pyodbc and are not added to the\n"
+    "The following specal keywords are processed by pyiodbc and are not added to the\n"
     "connection string.  (If you must use these in your connection string, pass them\n"
     "as a string, not as keywords.)\n"
     "\n"
@@ -745,12 +751,12 @@ static char connect_doc[] =
     "    ODBC autocommit mode and statements are committed automatically.\n"
     "   \n"
     "  ansi\n"
-    "    By default, pyodbc first attempts to connect using the Unicode version of\n"
+    "    By default, pyiodbc first attempts to connect using the Unicode version of\n"
     "    SQLDriverConnectW.  If the driver returns IM001 indicating it does not\n"
     "    support the Unicode version, the ANSI version is tried.  Any other SQLSTATE\n"
     "    is turned into an exception.  Setting ansi to true skips the Unicode\n"
     "    attempt and only connects using the ANSI version.  This is useful for\n"
-    "    drivers that return the wrong SQLSTATE (or if pyodbc is out of date and\n"
+    "    drivers that return the wrong SQLSTATE (or if pyiodbc is out of date and\n"
     "    should support other SQLSTATEs).\n"
     "   \n"
     "  timeout\n"
@@ -1181,7 +1187,7 @@ static bool CreateExceptions()
 #if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
-    "pyodbc",                   // m_name
+    "pyiodbc",                   // m_name
     module_doc,
     -1,                         // m_size
     pyodbc_methods,             // m_methods
@@ -1197,7 +1203,7 @@ static struct PyModuleDef moduledef = {
 
 PyMODINIT_FUNC
 #if PY_MAJOR_VERSION >= 3
-PyInit_pyodbc()
+PyInit_pyiodbc()
 #else
 initpyodbc(void)
 #endif
@@ -1212,7 +1218,7 @@ initpyodbc(void)
 #if PY_MAJOR_VERSION >= 3
     module.Attach(PyModule_Create(&moduledef));
 #else
-    module.Attach(Py_InitModule4("pyodbc", pyodbc_methods, module_doc, NULL, PYTHON_API_VERSION));
+    module.Attach(Py_InitModule4("pyiodbc", pyodbc_methods, module_doc, NULL, PYTHON_API_VERSION));
 #endif
 
     pModule = module.Get();
@@ -1222,7 +1228,7 @@ initpyodbc(void)
 
     init_locale_info();
 
-    const char* szVersion = TOSTRING(PYODBC_VERSION);
+    const char* szVersion = TOSTRING(PYIODBC_VERSION);
     PyModule_AddStringConstant(module, "version", (char*)szVersion);
 
     PyModule_AddIntConstant(module, "threadsafety", 1);

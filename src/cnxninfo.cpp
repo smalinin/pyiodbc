@@ -181,7 +181,7 @@ PyObject* GetConnectionInfo(PyObject* pConnectionString, Connection* cnxn)
 PyTypeObject CnxnInfoType =
 {
     PyVarObject_HEAD_INIT(0, 0)
-    "pyodbc.CnxnInfo",                                      // tp_name
+    "pyiodbc.CnxnInfo",                                      // tp_name
     sizeof(CnxnInfo),                                       // tp_basicsize
     0,                                                      // tp_itemsize
     0,                                                      // destructor tp_dealloc

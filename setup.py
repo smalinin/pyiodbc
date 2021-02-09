@@ -27,7 +27,7 @@ def _print(s):
 
 class VersionCommand(Command):
 
-    description = "prints the pyodbc version, determined from git"
+    description = "prints the pyiodbc version, determined from git"
 
     user_options = []
 
@@ -78,9 +78,9 @@ def main():
         os.remove('MANIFEST')
 
     kwargs = {
-        'name': "pyodbc",
+        'name': "pyiodbc",
         'version': version_str,
-        'description': "DB API Module for ODBC",
+        'description': "DB API Module for iODBC",
 
         'long_description': long_description,
         'long_description_content_type': 'text/markdown',
@@ -88,7 +88,7 @@ def main():
         'maintainer':       "Michael Kleehammer",
         'maintainer_email': "michael@kleehammer.com",
 
-        'ext_modules': [Extension('pyodbc', sorted(files), **settings)],
+        'ext_modules': [Extension('pyiodbc', sorted(files), **settings)],
 
         'license': 'MIT',
 
@@ -129,7 +129,7 @@ def get_compiler_settings(version_str):
         'extra_link_args': [],
         'libraries': [],
         'include_dirs': [],
-        'define_macros' : [ ('PYODBC_VERSION', version_str) ]
+        'define_macros' : [ ('PYIODBC_VERSION', version_str) ]
     }
 
     # This isn't the best or right way to do this, but I don't see how someone is supposed to sanely subclass the build
@@ -137,7 +137,7 @@ def get_compiler_settings(version_str):
     for option in ['assert', 'trace', 'leak-check']:
         try:
             sys.argv.remove('--%s' % option)
-            settings['define_macros'].append(('PYODBC_%s' % option.replace('-', '_').upper(), 1))
+            settings['define_macros'].append(('PYIODBC_%s' % option.replace('-', '_').upper(), 1))
         except ValueError:
             pass
 
@@ -210,10 +210,11 @@ def get_compiler_settings(version_str):
         # Python functions take a lot of 'char *' that really should be const.  gcc complains about this *a lot*
         settings['extra_compile_args'].append('-Wno-write-strings')
 
-        cflags = os.popen('odbc_config --cflags 2>/dev/null').read().strip()
+        cflags = os.popen('iodbc-config --cflags 2>/dev/null').read().strip()
         if cflags:
             settings['extra_compile_args'].extend(cflags.split())
         ldflags = os.popen('odbc_config --libs 2>/dev/null').read().strip()
+        ldflags = os.popen('iodbc-config --libs 2>/dev/null').read().strip()
         if ldflags:
             settings['extra_link_args'].extend(ldflags.split())
 
@@ -225,7 +226,7 @@ def get_compiler_settings(version_str):
 #            settings['define_macros'].append(('SQL_WCHART_CONVERT', '1'))
 
         # What is the proper way to detect iODBC, MyODBC, unixODBC, etc.?
-        settings['libraries'].append('odbc')
+#        settings['libraries'].append('iodbc')
 
     return settings
 

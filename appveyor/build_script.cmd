@@ -29,18 +29,18 @@ IF ERRORLEVEL 1 (
 "%PYTHON_HOME%\python" -m pip freeze --all
 
 ECHO.
-ECHO *** Building the pyodbc module...
+ECHO *** Building the pyiodbc module...
 %WITH_COMPILER% "%PYTHON_HOME%\python" setup.py build
 IF ERRORLEVEL 1 (
-  ECHO *** ERROR: pyodbc build failed
+  ECHO *** ERROR: pyiodbc build failed
   EXIT 1
 )
 
 ECHO.
-ECHO *** Installing pyodbc...
+ECHO *** Installing pyiodbc...
 "%PYTHON_HOME%\python" setup.py install
 IF ERRORLEVEL 1 (
-  ECHO *** ERROR: pyodbc install failed
+  ECHO *** ERROR: pyiodbc install failed
   EXIT 1
 )
 
@@ -49,7 +49,7 @@ ECHO *** pip freeze...
 "%PYTHON_HOME%\python" -m pip freeze --all
 
 ECHO.
-ECHO *** Get version of the built pyodbc module:
-"%PYTHON_HOME%\python" -c "import pyodbc; print(pyodbc.version)"
+ECHO *** Get version of the built pyiodbc module:
+"%PYTHON_HOME%\python" -c "import pyiodbc; print(pyiodbc.version)"
 
 ECHO.

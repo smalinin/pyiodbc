@@ -55,6 +55,7 @@ typedef unsigned long long UINT64;
 
 #include <sql.h>
 #include <sqlext.h>
+#include <iodbcext.h>
 
 #if PY_VERSION_HEX < 0x02050000 && !defined(PY_SSIZE_T_MIN)
 typedef int Py_ssize_t;
@@ -80,6 +81,10 @@ typedef int Py_ssize_t;
 
 #ifndef SQL_CA_SS_TYPE_NAME
 #define SQL_CA_SS_TYPE_NAME 1227
+#endif
+
+#ifndef BYTE
+typedef unsigned char BYTE;
 #endif
 
 inline bool IsSet(DWORD grf, DWORD flags)

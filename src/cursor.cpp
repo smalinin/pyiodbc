@@ -2187,7 +2187,7 @@ static char description_doc[] =
     "cursor has not had an operation invoked via the execute() method yet.\n" \
     "\n" \
     "The type_code can be interpreted by comparing it to the Type Objects defined in\n" \
-    "the DB API and defined the pyodbc module: Date, Time, Timestamp, Binary,\n" \
+    "the DB API and defined the pyiodbc module: Date, Time, Timestamp, Binary,\n" \
     "STRING, BINARY, NUMBER, and DATETIME.";
 
 static char arraysize_doc[] =
@@ -2427,7 +2427,7 @@ static char cursor_doc[] =
 PyTypeObject CursorType =
 {
     PyVarObject_HEAD_INIT(0, 0)
-    "pyodbc.Cursor",                                        // tp_name
+    "pyiodbc.Cursor",                                        // tp_name
     sizeof(Cursor),                                         // tp_basicsize
     0,                                                      // tp_itemsize
     (destructor)Cursor_dealloc,                             // destructor tp_dealloc

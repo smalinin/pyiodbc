@@ -59,6 +59,6 @@ inline bool lowercase()
 extern Py_UNICODE chDecimal;
 
 bool UseNativeUUID();
-// Returns True if pyodbc.native_uuid is true, meaning uuid.UUID objects should be returned.
+// Returns True if pyiodbc.native_uuid is true, meaning uuid.UUID objects should be returned.
 
 #endif // _PYPGMODULE_H

@@ -36,8 +36,8 @@ BEGIN
             VALUE "ProductVersion",   PRODUCT_VERSION_STRING(PYODBC_MAJOR,PYODBC_MINOR)
             VALUE "FileDescription",  "ODBC DB API 2.0 Module"
             VALUE "FileVersion",      FILE_VERSION_STRING(PYODBC_MAJOR,PYODBC_MINOR,PYODBC_MICRO,PYODBC_BUILD)
-            VALUE "InternalName",     "pyodbc"
-            VALUE "OriginalFilename", "pyodbc.pyd"
+            VALUE "InternalName",     "pyiodbc"
+            VALUE "OriginalFilename", "pyiodbc.pyd"
         END
     END
     BLOCK "VarFileInfo"
