@@ -1,4 +1,4 @@
-# pyodbc
+# pyiodbc
 
 [![Build Status](https://travis-ci.org/mkleehammer/pyodbc.svg?branch=master)](https://travis-ci.org/mkleehammer/pyodbc)
 [![Windows Status](https://ci.appveyor.com/api/projects/status/github/mkleehammer/pyodbc?branch=master&svg=true)](https://ci.appveyor.com/project/mkleehammer/pyodbc)
